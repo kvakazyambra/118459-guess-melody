@@ -7,13 +7,13 @@
     return content.querySelector(templateName).cloneNode(true);
   };
 
-
-  let slides = [
+  const slides = [
     loadTemplate('.main--welcome'),
     loadTemplate('.main--level-artist'),
     loadTemplate('.main--level-genre'),
     loadTemplate('.main--result')
   ];
+
   let current = -1;
 
   let select = (index) => {
