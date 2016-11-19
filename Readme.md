@@ -1,7 +1,7 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Хапов](https://up.htmlacademy.ru/ecmascript/1/user/118459).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Лепешкин](https://htmlacademy.ru/profile/id144641).
 
 ---
 
