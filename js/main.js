@@ -1,18 +1,17 @@
+import moduleWelcome from './template-modules/main-welcome';
+import moduleLevelArtist from './template-modules/main-level-artist';
+import moduleLevelGenre from './template-modules/main-level-genre';
+import moduleResult from './template-modules/main-result';
+
 (() => {
-
-  const template = document.querySelector('template');
-
-  const loadTemplate = (templateName) => {
-    let content = template.content ? template.content : template;
-    return content.querySelector(templateName).cloneNode(true);
-  };
-
   const slides = [
-    loadTemplate('.main--welcome'),
-    loadTemplate('.main--level-artist'),
-    loadTemplate('.main--level-genre'),
-    loadTemplate('.main--result')
+    moduleWelcome,
+    moduleLevelArtist,
+    moduleLevelGenre,
+    moduleResult
   ];
+
+  const slidesAmount = slides.length;
 
   let current = -1;
 
@@ -23,11 +22,17 @@
   };
 
   document.onkeydown = (evt) => {
-    evt.preventDefault();
-
     switch (evt.keyCode) {
-      case 37: current--; break;
-      case 39: current++; break;
+      case 37:
+        evt.preventDefault();
+        const tmpCurrent = current - 1;
+        current = tmpCurrent >= 0 && tmpCurrent < slidesAmount ?
+            tmpCurrent : current;
+        break;
+      case 39:
+        evt.preventDefault();
+        current = current + 1 < slidesAmount ? current + 1 : current;
+        break;
     }
 
     select(current);
