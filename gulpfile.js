@@ -11,7 +11,6 @@ const mqpacker = require('css-mqpacker');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
-const babel = require('gulp-babel');
 const webpack = require('gulp-webpack');
 
 gulp.task('style', function () {
