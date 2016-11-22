@@ -40,23 +40,6 @@ gulp.task('style', function () {
 gulp.task('scripts', function () {
   gulp.src('js/**/*.js')
     .pipe(plumber())
-/*
-    .pipe(webpack({
-      devtool: 'source-map',
-      module: {
-        loaders: [{
-          test: /\.js$/,
-          loader: 'babel-loader?presets[]=es2015'
-        }]
-      },
-      output: {
-        filename: 'main.js'
-      },
-      resolve: {
-        extensions: ['', '.js']
-      }
-    }))
-*/
     .pipe(webpack({
       output: {
         filename: 'main.js',
