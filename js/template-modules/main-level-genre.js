@@ -36,7 +36,7 @@ const moduleLevelGenre = function () {
 
   const genreForm = block.querySelector('.genre');
   const genreControls = [].slice.call(genreForm.querySelectorAll('input[name=answer]'));
-  const submitControl = genreForm.querySelector('[type=submit]');
+  const submitControl = genreForm.querySelector('.genre-answer-send');
 
   const isAnswerChecked = () => {
     let isChecked = false;
