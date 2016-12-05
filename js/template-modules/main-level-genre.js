@@ -1,36 +1,14 @@
 import getElementFromTemplate from '../get-element-from-template';
 import replaceContent from '../replace-content';
-import mainResult from './main-result';
+import {nextSlide, addValidAnswer, getValidAnswerID} from '../questions-handler';
 
-const moduleLevelGenre = function () {
-  const gameData = {
-    sliderHeader: 'Выберите инди-рок треки',
-    answers: [
-      {
-        id: 'a-1',
-        value: 'answer-1'
-      },
-      {
-        id: 'a-2',
-        value: 'answer-2'
-      },
-      {
-        id: 'a-3',
-        value: 'answer-3'
-      },
-      {
-        id: 'a-4',
-        value: 'answer-4'
-      }
-    ],
-    submitControlLabel: 'Ответить'
-  };
+export default (data) => {
 
-  const header = `<h2 class="title">${gameData.sliderHeader}</h2>`;
+  const header = `<h2 class="title">${data.sliderHeader}</h2>`;
 
   let answers = '';
 
-  for (const answer of gameData.answers) {
+  for (const answer of data.answers) {
     answers += `<div class="genre-answer">
         <div class="player-wrapper"></div>
         <input type="checkbox" name="answer" value="${answer.value}" id="${answer.id}">
@@ -38,7 +16,7 @@ const moduleLevelGenre = function () {
       </div>`;
   }
 
-  const submitControlTpl = `<button class="genre-answer-send" type="submit">${gameData.submitControlLabel}</button>`;
+  const submitControlTpl = `<button class="genre-answer-send" type="submit">${data.submitControlLabel}</button>`;
 
   const block = getElementFromTemplate(`<section class="main main--level main--level-genre">
       ${header}
@@ -47,6 +25,8 @@ const moduleLevelGenre = function () {
         ${submitControlTpl}
       </form>
     </section>`);
+
+  replaceContent(block);
 
   const genreForm = block.querySelector('.genre');
   const genreControls = [].slice.call(genreForm.querySelectorAll('input[name=answer]'));
@@ -79,8 +59,20 @@ const moduleLevelGenre = function () {
   genreForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
+    let answwers = [];
+
+    for (const it of genreControls) {
+      if (it.checked) {
+        answwers.push(it.id);
+      }
+    }
+
     if (isAnswerChecked()) {
-      replaceContent(mainResult());
+      if (answwers.sort().join() === getValidAnswerID().sort().join()) {
+        addValidAnswer();
+      }
+
+      nextSlide();
     }
   });
 
@@ -88,5 +80,3 @@ const moduleLevelGenre = function () {
 
   return block;
 };
-
-export default moduleLevelGenre;

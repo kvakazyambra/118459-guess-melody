@@ -1,33 +1,8 @@
 import getElementFromTemplate from '../get-element-from-template';
 import replaceContent from '../replace-content';
-import levelGenre from './main-level-genre';
+import {nextSlide, addValidAnswer, getValidAnswerID} from '../questions-handler';
 
-const moduleLevelArtist = function () {
-  const gameData = {
-    time: {
-      hours: '02',
-      minutes: '00'
-    },
-    sliderHeader: 'Кто исполняет эту песню?',
-    answers: [
-      {
-        id: 'answer-1',
-        value: 'val-1',
-        artistName: 'Пелагея'
-      },
-      {
-        id: 'answer-2',
-        value: 'val-2',
-        artistName: 'Краснознаменная дивизия имени моей бабушки'
-      },
-      {
-        id: 'answer-3',
-        value: 'val-3',
-        artistName: 'Lorde'
-      }
-    ]
-  };
-
+export default (data) => {
   const timerBlock = `<svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
           <circle
             cx="390" cy="390" r="370"
@@ -35,17 +10,17 @@ const moduleLevelArtist = function () {
             style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
     
           <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-            <span class="timer-value-mins">${gameData.time.hours}</span><!--
+            <span class="timer-value-mins">${data.time.hours}</span><!--
             --><span class="timer-value-dots">:</span><!--
-            --><span class="timer-value-secs">${gameData.time.minutes}</span>
+            --><span class="timer-value-secs">${data.time.minutes}</span>
           </div>
         </svg>`;
 
-  const sliderHheader = `<h2 class="title main-title">${gameData.sliderHeader}</h2>`;
+  const sliderHheader = `<h2 class="title main-title">${data.sliderHeader}</h2>`;
 
   let answers = '';
 
-  for (const answer of gameData.answers) {
+  for (const answer of data.answers) {
     answers += `<div class="main-answer-wrapper">
         <input class="main-answer-r" type="radio" id="${answer.id}" name="answer" value="${answer.value}" />
         <label class="main-answer" for="${answer.id}">
@@ -67,14 +42,17 @@ const moduleLevelArtist = function () {
       </div>
     </section>`);
 
+  replaceContent(block);
+
   [].slice.call(block.querySelectorAll('input[name=answer]'))
       .forEach(function (el) {
         el.addEventListener('change', () => {
-          replaceContent(levelGenre());
+          if (el.id === getValidAnswerID()) {
+            addValidAnswer();
+          }
+          nextSlide();
         });
       });
 
   return block;
 };
-
-export default moduleLevelArtist;
